@@ -1,28 +1,40 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Test</span>
+        <span class="font-weight-light">PHONEBOOK</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        flat
+        href="https://github.com/kostia7alania/phonebook-vue"
+        target="_blank"
+      >
+        <v-icon>code</v-icon>
+        <span class="mr-2 ml-1">
+          Repository</span>
+      </v-btn>
+    </v-toolbar>
+
+    <v-content>
+      <phonebook/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import phonebook from './components/phonebook'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    phonebook
+  },
+  data () {
+    return {
+      //
+    }
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
