@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import phonebook from './components/phonebook'
+import phonebook from './Phonebook'
 
 export default {
   name: 'App',
@@ -32,9 +32,7 @@ export default {
     phonebook
   },
   data () {
-    return {
-      //
-    }
+    return {}
   }
 }
 </script>
