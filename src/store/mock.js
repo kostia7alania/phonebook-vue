@@ -1,10 +1,10 @@
-const getGuid = () => Math.floor(Math.random()*100000000000)
+const { getGuid } = require('@/common/functions');
 
 const items = [
   { 
     name: 'Kostia',
     phone: "+79680608071",
-    created: +new Date,
+    createdAt: +new Date,
     guid: getGuid(),
     
   },
@@ -12,15 +12,22 @@ const items = [
     name: 'Kosti222',
     phone: "+79680608022",
     guid: getGuid(),
-    created: +new Date,
-    updated: null,
+    createdAt: +new Date,
+    updatedAt: null,
+  },
+  {
+    name: 'Kostia--33',
+    phone: "+79680608022",
+    guid: getGuid(),
+    createdAt: +new Date,
+    updatedAt: null,
   },
   {
     name: 'Andrews',
     phone: "+19929129129",
-    created: +new Date,
+    createdAt: +new Date,
     guid: getGuid(),
-    updated: null,
+    updatedAt: null,
   }
 ]
 
