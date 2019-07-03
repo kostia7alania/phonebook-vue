@@ -14,7 +14,7 @@
 
             <v-card-title primary-title>
               <div>
-                <div class="headline">Contact info</div>
+                <div class="headline">{{headline}}</div>
                 <span class="grey--text" v-if="itemCreatedDate">Created: {{itemCreatedDate}}</span>
                <br><span class="grey--text" v-if="itemUpdatedDate">Updated: {{itemUpdatedDate}}</span>
               </div>
@@ -66,7 +66,7 @@
 
 <script>
   export default {
-    props: ['show', 'item', 'isEditing'],
+    props: ['show', 'item', 'isEditing', 'isCreating'],
     data () {
       return {
         itemBuffer: {},
@@ -83,6 +83,11 @@
       this.refreshItems();
     },
     computed: {
+      headline() {
+        return this.isCreating && 'New contact' ||
+              this.isEditing && 'Edit contact '
+              || 'Contact info'
+      },
       randomImage() {
         return 'https://picsum.photos/500?' + this.item.phone
       },
