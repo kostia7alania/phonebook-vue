@@ -39,6 +39,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
       items(newItems) {
         if(!newItems.filter(item => item.name == this.FILTER_ITEMS_BY_NAME).length) {
           this.selected = null
+          this.SET_IS_SEARCH_MODE(false)
         }
       }
     },
@@ -49,7 +50,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
     },
     methods: {
       ...mapMutations([
-        'SET_FILTER_BY_NAME'
+        'SET_FILTER_BY_NAME', 'SET_IS_SEARCH_MODE'
       ])
     }
   }
