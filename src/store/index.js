@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-import items from './mock'
-
 Vue.use(Vuex)
 
-const { getGuid, compare, convertToCSV } = require('@/common/functions');
 
+import items from './mock'
+const { getGuid, compare, convertToCSV } = require('@/common/functions');
 import { saveAs } from 'file-saver';
 
-
+import createPersistedState from 'vuex-persistedstate'
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     items: items,
     loading: false,
@@ -27,6 +26,9 @@ export default new Vuex.Store({
     },
     IS_SEARCH_MODE(state) {
       return state.isSearchMode
+    },
+    COUNT_FILTERED_ITEMS(state, getters) {
+      return getters.FILTERED_ITEMS.length
     },
     FILTERED_ITEMS(state) {
       let items = state.items
@@ -45,7 +47,13 @@ export default new Vuex.Store({
     SET_LOADING_OFF(state) { state.loading = false },
     SET_IS_SEARCH_MODE(state, mode) {state.isSearchMode = mode}, 
     DELETE_ITEM(state, guid) {
-      state.items = state.items.filter( item => item.guid != guid)
+      //state.items = state.items.filter( item => item.guid != guid)
+      state.items.some((item,index)=> {
+        if(item.guid === guid) {
+          return Vue.delete( state.items, index)
+        }
+      })
+      
     },
     SET_FILTER_BY_NAME(state, name) {
       state.filterItemsByName = name
@@ -112,5 +120,5 @@ export default new Vuex.Store({
       return { created, merged }
     },
 
-  }
+  },
 })
