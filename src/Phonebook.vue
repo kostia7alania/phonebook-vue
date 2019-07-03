@@ -4,7 +4,6 @@
       <v-card> 
       <toolbar @showMenu="showMenu"/>
       <v-card-title class="headline font-weight-regular blue-grey white--text">
-      
             <v-badge color="">
               <template v-slot:badge>
                 <span> {{count}}</span>
@@ -136,9 +135,4 @@ import Import from './components/Import'
     }
   }
 </script>
-
-<style lang="scss">
-  .v-card.v-sheet.theme--light {
-    max-height: 96vh;
-  }
-</style>
+ 
