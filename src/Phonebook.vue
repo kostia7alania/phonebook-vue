@@ -4,9 +4,15 @@
       <v-card> 
       <toolbar @showMenu="showMenu"/>
       <v-card-title class="headline font-weight-regular blue-grey white--text">
-        Contacts 
-        <v-btn @click="newContact" absolute fab dark right small color="pink">
-              <v-icon>add</v-icon>
+      
+            <v-badge color="">
+              <template v-slot:badge>
+                <span> {{count}}</span>
+              </template>
+                 Contacts
+            </v-badge>
+        <v-btn @click="newContact" absolute dark right small color="pink">
+          <v-icon>add</v-icon>
         </v-btn>
       </v-card-title>
          
@@ -47,7 +53,13 @@
                   
     </v-flex>
     
-    <navigation :show="isNaviShow" @setNaviShow="isNaviShow=$event"/>
+    <navigation 
+      :show="isNaviShow"
+      @setNaviShow="setNaviShow($event)"
+      @showImport="showImport"
+    />
+    
+    <Import v-if="isImportShow" :show="isImportShow" @hide="hideImport"/>
 
   </v-layout>
 </template>
@@ -58,20 +70,25 @@ import contact from './components/Contact.vue'
 import { mapGetters, mapMutations } from 'vuex'
 import ContactInfo from './components/Contact-info.vue';
 import navigation from './components/Navigation.vue';
+import Import from './components/Import'
 
   export default {
     name: 'phone-book',
-    components: {toolbar, contact, ContactInfo, navigation},
+    components: {toolbar, contact, ContactInfo, navigation, Import},
     data() {
       return {
         showDialog: false,
-        isNaviShow: null
+        isNaviShow: null,
+        isImportShow:null,
       }
     },
     computed: {
       ...mapGetters([
         'FILTERED_ITEMS', 'FILTER_ITEMS_BY_NAME', 'IS_SEARCH_MODE'
       ]),
+      count(){
+        return this.FILTERED_ITEMS && this.FILTERED_ITEMS.length
+      },
       noItems() {
         return this.IS_SEARCH_MODE&&this.FILTER_ITEMS_BY_NAME && `No contacts found for query "${this.FILTER_ITEMS_BY_NAME}"` || 'Contact list is empty'
       }
@@ -101,6 +118,15 @@ import navigation from './components/Navigation.vue';
       closeModal() {
         this.showDialog=false
         console.log('closeModal')
+      },
+      setNaviShow(state) {
+        this.isNaviShow = state
+      },
+      showImport(){
+        this.isImportShow = true
+      },
+      hideImport(){
+        this.isImportShow = false
       }
     },
     filters: {
@@ -111,3 +137,8 @@ import navigation from './components/Navigation.vue';
   }
 </script>
 
+<style lang="scss">
+  .v-card.v-sheet.theme--light {
+    max-height: 96vh;
+  }
+</style>
