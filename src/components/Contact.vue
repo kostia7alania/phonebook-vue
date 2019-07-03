@@ -24,7 +24,7 @@
         </v-list-tile-content>
       </v-list-tile> 
 
-      </v-flex xs1>
+      </v-flex>
       <v-flex>
       <actionBtns :item="item" @edit="editClick" @delete="deleteClick"/>
       </v-flex>
