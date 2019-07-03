@@ -1,5 +1,5 @@
 <template>
-      <v-footer absolute class="">
+      <v-footer class="">
         <v-layout row wrap align-center>
           <v-flex xs12>
             <div class=" ml-3">
