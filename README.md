@@ -1,7 +1,8 @@
 # phonebook-vue 
 
-
-<img align="center" src="./video-screen.gif"> 
+<p align="center">
+  <img align="center" src="./video-screen.gif"> 
+</p>
 
 ## Project setup
 ```
