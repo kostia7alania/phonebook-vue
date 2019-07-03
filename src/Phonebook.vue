@@ -1,9 +1,8 @@
 <template>
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
-      <v-card>
-      
-      <toolbar/>
+      <v-card> 
+      <toolbar @showMenu="showMenu"/>
       <v-card-title class="headline font-weight-regular blue-grey white--text">
         Contacts 
         <v-btn @click="newContact" absolute fab dark right small color="pink">
@@ -12,9 +11,17 @@
       </v-card-title>
          
           <v-list two-line>
-              <v-subheader>today</v-subheader>
-            <template v-for="item in FILTERED_ITEMS">
-              <contact :item="item" :key="item.guid"/>
+            <template v-for="(item,i) in FILTERED_ITEMS">
+
+              <v-subheader
+                v-if="showSubheader(i,item)"
+                :key="item.guid+2">
+                {{ item.name&&item.name[0] | subheaderFilter}}
+              </v-subheader>
+              <contact
+                :item="item"
+                :key="item.guid"
+              />
             </template>
 
             <v-alert
@@ -39,6 +46,9 @@
       />
                   
     </v-flex>
+    
+    <navigation :show="isNaviShow" @setNaviShow="isNaviShow=$event"/>
+
   </v-layout>
 </template>
 
@@ -47,13 +57,15 @@ import toolbar from './components/Toolbar.vue'
 import contact from './components/Contact.vue'
 import { mapGetters, mapMutations } from 'vuex'
 import ContactInfo from './components/Contact-info.vue';
+import navigation from './components/Navigation.vue';
 
   export default {
     name: 'phone-book',
-    components: {toolbar, contact, ContactInfo},
+    components: {toolbar, contact, ContactInfo, navigation},
     data() {
       return {
-        showDialog: false
+        showDialog: false,
+        isNaviShow: null
       }
     },
     computed: {
@@ -68,6 +80,15 @@ import ContactInfo from './components/Contact-info.vue';
       ...mapMutations([
         'NEW_ITEM'
       ]),
+      showSubheader(i,item) {
+        if(!i) return true
+        const prevName = this.FILTERED_ITEMS[i-1].name && this.FILTERED_ITEMS[i-1].name[0]
+        const nextName = item.name&&item.name[0]
+        return (""+prevName).toUpperCase() != (""+nextName).toUpperCase()
+      },
+      showMenu(){
+        this.isNaviShow = !this.isNaviShow
+      },
       newContact() {
         this.showDialog=true 
         console.log('newContact')
@@ -80,6 +101,11 @@ import ContactInfo from './components/Contact-info.vue';
       closeModal() {
         this.showDialog=false
         console.log('closeModal')
+      }
+    },
+    filters: {
+      subheaderFilter(e) {
+        return typeof e == 'string' && e.toUpperCase() || ''
       }
     }
   }
