@@ -1,6 +1,5 @@
 # phonebook-vue
 
-<img src="./Screenshot 2019-07-03 15.37.53.jpg">
 <img src="./video-screen.gif">
 
 
@@ -42,3 +41,7 @@ When it uploads a file, it updates the phonebook, creating, updating and deletin
 
 
 You are allowed to use rich Javascript packages, but we encourage you to use newest, stable versions of whatever you will use to solve this problem.
+
+
+
+<img src="./Screenshot 2019-07-03 15.37.53.jpg">
