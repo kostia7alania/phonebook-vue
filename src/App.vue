@@ -18,7 +18,7 @@
     </v-toolbar>
 
     <v-content>
-      <phonebook/>
+    <phonebook/>
     </v-content>
     
     <snack/>
