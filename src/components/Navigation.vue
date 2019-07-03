@@ -61,6 +61,7 @@ export default {
           { title: 'Phonebook', icon: 'contact_phone' },
           { title: 'Export', icon: 'cloud_upload' },
           { title: 'Import', icon: 'cloud_download' },
+          { title: 'Export to CSV', icon: 'description' },
           { title: 'Feedback', icon: 'question_answer' }
         ],
         mini: false,
@@ -80,7 +81,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'SAVE_CONTACTS'
+      'SAVE_CONTACTS', 'SAVE_CONTACTS_CSV'
     ]),
     naviClick(title) { 
       if(title=='Phonebook') {
@@ -88,12 +89,15 @@ export default {
       }
       
       if(title=='Export') {
-        console.log('Export')
         this.SAVE_CONTACTS();
       }
 
-      if(title=='Import') {
-        console.log('Import')
+      if(title=='Import') { 
+        this.$emit('showImport')
+      }
+
+      if(title=='Export to CSV') { 
+        this.SAVE_CONTACTS_CSV();
       }
       
       if(title=='Feedback') {
