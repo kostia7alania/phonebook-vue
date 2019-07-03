@@ -65,14 +65,52 @@ export default new Vuex.Store({
       state.items.push(newItem)
 
     },
+    IMPORT_SET_ITEM(state, newItem) {
+      state.items.push(newItem)
+    },
+    IMPORT_NEW_ITEM(state, {item, newItem}) {
+      Object.assign(item, newItem)
+    },
     SET_SNACK_MSG(state, msg) {
       state.snackMsg = msg
     }
   },
   actions: {
     SAVE_CONTACTS({state}) { 
+      const str = JSON.stringify(state.items)
+      const blob = new Blob([str], {type: "text/plain;charset=utf-8"});
+      saveAs.saveAs(blob, `Contacts backup ${new Date().toLocaleString()}.json`);
+    },
+    SAVE_CONTACTS_CSV({state}) { 
       const csv = convertToCSV(state.items)
-      var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
-      saveAs.saveAs(blob, `Contacts backup ${new Date().toLocaleString()}.txt`);    }
+      const blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+      saveAs.saveAs(blob, `Contacts backup ${new Date().toLocaleString()}.csv`);
+    },
+
+
+    IMPORT_ITEMS({state, commit}, newItems) {
+      let created = 0
+      let merged = 0
+
+      for(const newItem of newItems) {
+        newItem.importedAt = +new Date
+        let isSeted
+        for(const item of state.items) {
+          if(item.guid === newItem.guid) {
+            commit('IMPORT_NEW_ITEM', {item, newItem} ) 
+            isSeted = true
+            merged++
+            break;
+          }
+        }
+        if(!isSeted) {
+          commit('IMPORT_SET_ITEM',  newItem) 
+          created++
+        }
+      }
+
+      return { created, merged }
+    },
+
   }
 })
