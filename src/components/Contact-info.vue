@@ -16,13 +16,15 @@
               <div>
                 <div class="headline">{{headline}}</div>
                 <span class="grey--text" v-if="itemCreatedDate">Created: {{itemCreatedDate}}</span>
-               <br><span class="grey--text" v-if="itemUpdatedDate">Updated: {{itemUpdatedDate}}</span>
+               <span class="grey--text" v-if="itemUpdatedDate"><br>Updated: {{itemUpdatedDate}}</span>
+               <span class="grey--text" v-if="itemImportedDate"><br>Imported: {{itemImportedDate}}</span>
               </div>
             </v-card-title>
  
             <v-card-text class="pt-0">
               <v-text-field
                 :disabled="!isEditing"
+                @keyup.enter="saveClick"
                 v-model.trim="itemBuffer.name"
                 label="Name"
                 prepend-icon="person"
@@ -32,6 +34,7 @@
              />
               <v-text-field
                 :disabled="!isEditing"
+                @keyup.enter="saveClick"
                 v-model.trim="itemBuffer.phone"
                 label="Phone"
                 prepend-icon="phone"
@@ -103,14 +106,13 @@
         }
       },
       itemCreatedDate() {
-        let dt = this.item.createdAt
-        dt = dt && new Date(dt)
-        return !isNaN(+dt) && dt.toLocaleString()
+        return this.dateParse(this.item.createdAt) 
       },
       itemUpdatedDate() {
-        let dt = this.item.updatedAt
-        dt = dt && new Date(dt)
-        return dt && !isNaN(+dt) && dt.toLocaleString()
+        return this.dateParse(this.item.updatedAt) 
+      },
+      itemImportedDate() {
+        return this.dateParse(this.item.importedAt)
       },
       isSaveBtnActive() {
         const name = this.itemBuffer.name
@@ -119,8 +121,12 @@
       }
     },
     methods: {
+      dateParse(date) {
+        const dt = date && new Date(date)
+        return dt && !isNaN(+dt) && dt.toLocaleString()
+      },
       saveClick(){
-        this.$emit('save', this.itemBuffer)
+        if(this.isSaveBtnActive) this.$emit('save', this.itemBuffer)
       },
       cancelClick(){
         this.refreshItems()
