@@ -34,14 +34,18 @@
               <p>Size: {{filesize}} </p> 
               <p>Modified: {{fileDateModified}} </p> 
               <div>
-                <v-textarea
-                  v-model="filePreview"
-                  auto-grow
-                  box
-                  color="deep-purple"
-                  label="Preview"
-                  rows="1"
-                ></v-textarea> 
+
+                      <v-textarea
+                        class="text-area"
+                        v-model="filePreview"
+                        auto-grow
+                        box
+                        outline
+                        counter
+                        color="deep-purple"
+                        label="Preview" 
+                      />
+
               </div>
             </div>
         </v-card-text>
@@ -159,7 +163,7 @@ export default {
       const f = this.selectedFile
       if(!this.isSupportedType) return;
       const reader = new FileReader();
-      reader.onload = ( theFile => {
+      reader.onload = ( () => {
         return e => { 
           let res = e.target.result.replace('data:application/json;base64,', '')
           this.filePreview = atob(res)
@@ -170,3 +174,4 @@ export default {
   }
 }
 </script> 
+ 
