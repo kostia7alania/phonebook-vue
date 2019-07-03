@@ -23,19 +23,22 @@
             <v-card-text class="pt-0">
               <v-text-field
                 :disabled="!isEditing"
-                v-model="itemBuffer.name"
+                v-model.trim="itemBuffer.name"
                 label="Name"
                 prepend-icon="person"
                 :rules="nameRules"
                 required
+                :validate="false"
              />
               <v-text-field
                 :disabled="!isEditing"
-                v-model="itemBuffer.phone"
+                v-model.trim="itemBuffer.phone"
                 label="Phone"
                 prepend-icon="phone"
                 :rules="phoneRules"
                 required
+                :validate="false"
+
              />
             </v-card-text>
   
@@ -46,7 +49,7 @@
               <v-btn v-if="!isEditing" flat @click="$emit('edit')">Edit</v-btn>
               <v-btn v-if="!isEditing" flat @click="$emit('delete')" color="purple">Delete</v-btn>
             
-              <v-btn v-if="isEditing" flat @click="saveClick">Save</v-btn>
+              <v-btn :disabled="!isSaveBtnActive" v-if="isEditing" flat @click="saveClick">Save</v-btn>
               <v-btn v-if="isEditing" flat @click="cancelClick">Cancel</v-btn>
               
               <v-spacer></v-spacer>
@@ -108,6 +111,11 @@
         let dt = this.item.updatedAt
         dt = dt && new Date(dt)
         return dt && !isNaN(+dt) && dt.toLocaleString()
+      },
+      isSaveBtnActive() {
+        const name = this.itemBuffer.name
+        const phone = this.itemBuffer.phone
+        return typeof name == 'string' && typeof phone == 'string' && name && phone
       }
     },
     methods: {
