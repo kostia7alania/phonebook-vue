@@ -3,8 +3,8 @@
       v-model="isShowing"
       :timeout="timeout"
       absolute
-      bottom
-      left
+      top
+      center
     > 
     {{SNACK_MSG}}
     </v-snackbar>
