@@ -5,7 +5,10 @@ import items from './mock'
 
 Vue.use(Vuex)
 
-const { getGuid } = require('@/common/functions');
+const { getGuid, compare, convertToCSV } = require('@/common/functions');
+
+import { saveAs } from 'file-saver';
+
 
 export default new Vuex.Store({
   state: {
@@ -26,10 +29,12 @@ export default new Vuex.Store({
       return state.isSearchMode
     },
     FILTERED_ITEMS(state) {
+      let items = state.items
       if(state.filterItemsByName) {
-        return state.items.filter( item => item.name.match(new RegExp(state.filterItemsByName, 'gim')) )
+        items = state.items.filter( item => item.name.match(new RegExp(state.filterItemsByName, 'gim')) )
       }
-      return state.items
+      if(!items.length) return []
+      return items.sort(compare);
     },
     SNACK_MSG(state) {
       return state.snackMsg
@@ -65,6 +70,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    SAVE_CONTACTS({state}) { 
+      const csv = convertToCSV(state.items)
+      var blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+      saveAs.saveAs(blob, `Contacts backup ${new Date().toLocaleString()}.txt`);    }
   }
 })

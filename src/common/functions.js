@@ -5,7 +5,7 @@ export const compare = (a, b, key = 'name') => {
     return 0;
   }
 
- export const convertToCSV = objArray => {
+  export const convertToCSV = objArray => {
     let rows = typeof objArray !== "object" ? JSON.parse(objArray) : objArray;
     let  header = "";
     Object.keys(rows[0]).map(pr => (header += pr + ";"));

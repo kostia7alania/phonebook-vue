@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   props: ['show'],
   data() {
@@ -78,6 +79,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'SAVE_CONTACTS'
+    ]),
     naviClick(title) { 
       if(title=='Phonebook') {
         console.log('Phonebook')
@@ -85,6 +89,7 @@ export default {
       
       if(title=='Export') {
         console.log('Export')
+        this.SAVE_CONTACTS();
       }
 
       if(title=='Import') {
