@@ -1,7 +1,7 @@
 # phonebook-vue 
 
 <p align="center">
-  <img align="center" src="./video-screen.gif"> 
+  <img src="./preview/Video-2019-07-03-15.39.10.gif"> 
 </p>
 
 ## Project setup
@@ -44,5 +44,7 @@ When it uploads a file, it updates the phonebook, creating, updating and deletin
 You are allowed to use rich Javascript packages, but we encourage you to use newest, stable versions of whatever you will use to solve this problem.
 
 
-
-<img src="./Screenshot 2019-07-03 15.37.53.jpg">
+<p align="center">
+  <img src="./preview/video-screen.gif"> 
+  <img src="./preview/Screenshot 2019-07-03 15.37.53.jpg">
+</p>
