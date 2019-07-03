@@ -1,6 +1,6 @@
 <template>
         <v-toolbar color="cyan" dark>
-          <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-side-icon @click="showMenu"></v-toolbar-side-icon>
           <v-toolbar-title v-if="!IS_SEARCH_MODE">Phonebook</v-toolbar-title>
           <v-spacer></v-spacer>
 
@@ -32,6 +32,9 @@ import SearchList from './SearchList.vue';
       ...mapMutations([
         'SET_IS_SEARCH_MODE',  
       ]),
+      showMenu() {
+        this.$emit('showMenu')
+      },
       searchClick() {
          this.SET_IS_SEARCH_MODE(!this.IS_SEARCH_MODE)
       }
