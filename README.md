@@ -1,11 +1,9 @@
 # phonebook-vue
 
 <img src="./Screenshot 2019-07-03 15.37.53.jpg">
-  <video width="400" height="300" controls="controls" poster="./Screenshot 2019-07-03 15.37.53.jpg"> 
-   <source src="./Video-2019-07-03 15.39.10.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'> 
-   Тег video не поддерживается вашим браузером. 
-   <a href="./Video-2019-07-03 15.39.10.mp4">Скачайте видео</a>.
-  </video>
+<img src="./video-screen.gif">
+
+
 ## Project setup
 ```
 yarn install
