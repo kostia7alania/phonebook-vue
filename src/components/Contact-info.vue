@@ -1,6 +1,6 @@
 <template> 
     <v-dialog
-      v-model="showComp"
+      v-model="isShowing"
       width="500"
     > 
       <v-layout row>
@@ -22,16 +22,20 @@
  
             <v-card-text class="pt-0">
               <v-text-field
-                :disabled="!editMode"
+                :disabled="!isEditing"
                 v-model="itemBuffer.name"
                 label="Name"
                 prepend-icon="person"
+                :rules="nameRules"
+                required
              />
               <v-text-field
-                :disabled="!editMode"
+                :disabled="!isEditing"
                 v-model="itemBuffer.phone"
                 label="Phone"
                 prepend-icon="phone"
+                :rules="phoneRules"
+                required
              />
             </v-card-text>
   
@@ -39,18 +43,15 @@
     
             <v-card-actions>
 
-              <v-btn v-if="!editMode" flat @click="$emit('edit')">Edit</v-btn>
-              <v-btn v-if="!editMode" flat @click="$emit('delete')" color="purple">Delete</v-btn>
+              <v-btn v-if="!isEditing" flat @click="$emit('edit')">Edit</v-btn>
+              <v-btn v-if="!isEditing" flat @click="$emit('delete')" color="purple">Delete</v-btn>
             
-              <v-btn v-if="editMode" flat @click="saveClick">Save</v-btn>
-              <v-btn v-if="editMode" flat @click="cancelClick">Cancel</v-btn>
+              <v-btn v-if="isEditing" flat @click="saveClick">Save</v-btn>
+              <v-btn v-if="isEditing" flat @click="cancelClick">Cancel</v-btn>
               
               <v-spacer></v-spacer>
-              <v-btn
-                color="primary"
-                flat
-                @click="$emit('close')"
-              > Close
+
+              <v-btn color="primary" flat @click="$emit('close')"> Close
               </v-btn>
 
               
@@ -65,10 +66,17 @@
 
 <script>
   export default {
-    props: ['show', 'item', 'editMode'],
+    props: ['show', 'item', 'isEditing'],
     data () {
       return {
-        itemBuffer: {}
+        itemBuffer: {},
+        nameRules: [
+          v => !!v || 'Name is required',
+        ],
+        phoneRules: [
+          v => !!v || 'Phone is required',
+        ],
+        
       }
     },
     mounted() {
@@ -78,7 +86,7 @@
       randomImage() {
         return 'https://picsum.photos/500?' + this.item.phone
       },
-      showComp: {
+      isShowing: {
         get() {
           return this.show
         },
@@ -87,12 +95,12 @@
         }
       },
       itemCreatedDate() {
-        let dt = this.item.created
+        let dt = this.item.createdAt
         dt = dt && new Date(dt)
         return !isNaN(+dt) && dt.toLocaleString()
       },
       itemUpdatedDate() {
-        let dt = this.item.updated
+        let dt = this.item.updatedAt
         dt = dt && new Date(dt)
         return dt && !isNaN(+dt) && dt.toLocaleString()
       }
@@ -106,7 +114,7 @@
         this.$emit('cancel')
       },
       refreshItems() {
-        this.itemBuffer = {...this.item}
+        this.itemBuffer = {...this.item }
       }
     }
   }

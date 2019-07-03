@@ -15,7 +15,7 @@
         avatar
       >
         <v-list-tile-avatar>
-          <img src="https://via.placeholder.com/150">
+          <img :src="userPicture">
         </v-list-tile-avatar>
 
         <v-list-tile-content>
@@ -33,7 +33,7 @@
     <ContactInfo
       :item="item"
       :show="showDialog"
-      :editMode="editMode"
+      :isEditing="isEditing"
       @edit="editClick"
       @delete="deleteClick"
       @close="closeModal"
@@ -48,7 +48,9 @@
 <script>
   import actionBtns from './ActionBtns';
   import ContactInfo from './Contact-info';
-import { mapMutations } from 'vuex';
+  import { mapMutations } from 'vuex';
+  const { getGuid } = require('@/common/functions');
+ 
   export default {
     name: 'contact',
     props: ['item'],
@@ -56,33 +58,41 @@ import { mapMutations } from 'vuex';
     data() {
       return {
         showDialog: false,
-        editMode: false,
+        isEditing: false
       }
-    }, 
+    },
+    computed: {
+      userPicture(){
+        return 'https://i.pravatar.cc/100?'+getGuid()
+      },
+    },
     methods: {
       ...mapMutations([
         'SET_ITEM',
-        'DELETE_ITEM'
+        'DELETE_ITEM',
+        'SET_SNACK_MSG'
       ]),
       editClick(){
         console.log('editClick=>',this.item.guid)
-        this.editMode = true
+        this.isEditing = true
         this.showDialog = true
       },
       deleteClick() {
         this.DELETE_ITEM(this.item.guid)
+        this.SET_SNACK_MSG('Contact has been deleted')
       },
       closeModal(){
         this.showDialog = false
-        this.editMode = false
+        this.isEditing = false
       },
-      saveClick(e) {
+      saveClick(newItem) {
         console.warn('save')
-        this.SET_ITEM(this.item)
-        this.editMode = false
+        this.SET_ITEM(newItem)
+        this.isEditing = false
+        this.SET_SNACK_MSG('Contact has been updated')
       },
       cancelClick() {
-        this.editMode = false
+        this.isEditing = false
       }
     }
   }

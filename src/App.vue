@@ -20,16 +20,21 @@
     <v-content>
       <phonebook/>
     </v-content>
+    
+    <snack/>
+    
   </v-app>
 </template>
 
 <script>
 import phonebook from './Phonebook'
+import snack from './components/Snack'
 
 export default {
   name: 'App',
   components: {
-    phonebook
+    phonebook,
+    snack
   },
   data () {
     return {}
