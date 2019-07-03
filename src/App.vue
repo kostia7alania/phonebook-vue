@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-toolbar app>
+  <v-app light app>
+    <v-toolbar  >
       <v-toolbar-title class="headline text-uppercase">
         <span>Test</span>
         <span class="font-weight-light">PHONEBOOK</span>
@@ -18,26 +18,29 @@
     </v-toolbar>
 
     <v-content>
-    <phonebook/>
+      <section>
+        <phonebook/>
+      </section>
+        <footer-app/>
+      <snack/>
     </v-content>
-    
-    <snack/>
-    
   </v-app>
 </template>
 
 <script>
 import phonebook from './Phonebook'
 import snack from './components/Snack'
+import footer from './Footer'
 
 export default {
   name: 'App',
   components: {
     phonebook,
-    snack
+    snack,
+    'footer-app':footer
   },
   data () {
     return {}
   }
 }
-</script>
+</script> 
