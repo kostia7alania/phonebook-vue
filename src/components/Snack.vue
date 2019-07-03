@@ -16,7 +16,7 @@ import { mapGetters, mapMutations } from 'vuex';
     name: 'snack',  
     data() {
       return {
-        timeout: 2000,
+        timeout: 4000,
         forceHide: false,
 
       }
