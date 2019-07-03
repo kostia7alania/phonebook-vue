@@ -28,6 +28,7 @@
       </v-card>
 
       <ContactInfo
+        isCreating=1
         v-if="showDialog"
         :item="{}"
         :show="showDialog"
