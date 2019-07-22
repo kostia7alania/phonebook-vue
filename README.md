@@ -5,7 +5,7 @@
 <a href="https://cool-chair.surge.sh/">thanks to surge for fast & free hosting!</a>
 
 <p align="center">
-  <img src="https://ezgif.com/optimize/ezgif-4-86766a8e0ad9.gif"> 
+  <img src="https://im4.ezgif.com/tmp/ezgif-4-86766a8e0ad9.gif">
 
   <img src="./preview/Video-2019-07-03-15.39.10.gif"> 
 </p>
